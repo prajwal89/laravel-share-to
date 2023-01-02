@@ -1,18 +1,24 @@
 {
     "name": "prajwal89/laravel-share-to",
+    "description": "Generate and render social share buttons without any hassle",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "laravel",
+        "social",
+        "share",
+        "links",
+        "buttons"
+    ],
     "autoload": {
         "psr-4": {
             "Prajwal89\\LaravelShareTo\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "prajwal89",
-            "email": "22263436+prajwal89@users.noreply.github.com"
-        }
-    ],
+    "authors": [{
+        "name": "Prajwal Hallale",
+        "email": "prajwalhallale89@gmail.com"
+    }],
     "minimum-stability": "stable",
     "require": {}
 }
