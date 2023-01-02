@@ -5,8 +5,6 @@ namespace Prajwal89\LaravelShareTo;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
-// php artisan vendor:publish --provider="Prajwal89\LaravelShareTo\LaravelShareToServiceProvider" --tag="migrations"
-
 class LaravelShareToServiceProvider extends ServiceProvider
 {
     /**

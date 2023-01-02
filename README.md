@@ -3,10 +3,13 @@ Generate and render social share buttons without any hassle
 
 
 ## Installation
-```php
+```bash
 composer require prajwal89/laravel-share-to
 ```
-
+## Publish assets
+```bash
+php artisan vendor:publish --provider="Prajwal89\LaravelShareTo\LaravelShareToServiceProvider"
+```
 
 ## usage
 ```php
