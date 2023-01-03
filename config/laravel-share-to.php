@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'foo' => 'bar'
+    'trackingEndpoint' => '/laravel-share-to'
 ];
