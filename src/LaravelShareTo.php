@@ -109,12 +109,12 @@ class LaravelShareTo
     {
         if ($this->options['tracking']) {
             $payload = [
-                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]),
                 'title' => $this->title,
-                'urlRedirectingFrom' => $this->url,
                 'chanel' => __FUNCTION__,
+                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]),
+                'urlRedirectingFrom' => $this->url,
             ];
-            $url = '/laravel-share-to?payload=' . base64_encode(json_encode($payload));
+            $url = $this->generatePayloadUrl($payload);
         } else {
             $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]);
         }
@@ -125,19 +125,58 @@ class LaravelShareTo
 
     public function whatsapp(): self
     {
-        $this->shareUrls[__FUNCTION__] = $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]);
+        if ($this->options['tracking']) {
+            $payload = [
+                'title' => $this->title,
+                'chanel' => __FUNCTION__,
+                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]),
+                'urlRedirectingFrom' => $this->url,
+            ];
+            $url = $this->generatePayloadUrl($payload);
+        } else {
+            $url = $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]);
+        }
+
+        $this->shareUrls[__FUNCTION__] = $url;
+
         return $this;
     }
 
     public function twitter(): self
     {
-        $this->shareUrls[__FUNCTION__] = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+        if ($this->options['tracking']) {
+            $payload = [
+                'title' => $this->title,
+                'chanel' => __FUNCTION__,
+                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]),
+                'urlRedirectingFrom' => $this->url,
+            ];
+            $url = $this->generatePayloadUrl($payload);
+        } else {
+            $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+        }
+
+        $this->shareUrls[__FUNCTION__] = $url;
+
         return $this;
     }
 
     public function telegram(): self
     {
-        $this->shareUrls[__FUNCTION__] = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+        if ($this->options['tracking']) {
+            $payload = [
+                'title' => $this->title,
+                'chanel' => __FUNCTION__,
+                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]),
+                'urlRedirectingFrom' => $this->url,
+            ];
+            $url = $this->generatePayloadUrl($payload);
+        } else {
+            $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+        }
+
+        $this->shareUrls[__FUNCTION__] = $url;
+
         return $this;
     }
 
@@ -195,5 +234,10 @@ class LaravelShareTo
             }
         }
         return $this;
+    }
+
+    public function generatePayloadUrl($payload)
+    {
+        return config('laravel-share-to.trackingEndpoint') . '?payload=' . base64_encode(json_encode($payload));
     }
 }
