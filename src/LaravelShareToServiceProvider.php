@@ -20,24 +20,18 @@ class LaravelShareToServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
+        Route::group(['name' => 'laravel-share-to'], function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
     }
 
-    protected function routeConfiguration()
-    {
-        return [
-            // 'prefix' => config('blogpackage.prefix'),
-            // 'middleware' => config('blogpackage.middleware'),
-        ];
-    }
 
     /**
      * Bootstrap services.
      *
      * @return void
      */
+
     public function boot()
     {
         $this->registerRoutes();
@@ -47,15 +41,13 @@ class LaravelShareToServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         if ($this->app->runningInConsole()) {
-            // Export the migration
             $this->publishes([
                 __DIR__ . '/../database/migrations/create_track_share.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_track_share.php'),
-                // you can add any number of migrations here
             ], 'migrations');
-        }
 
-        $this->publishes([
-            __DIR__ . '/../config/laravel-share-to.php' => config_path('laravel-share-to.php'),
-        ], 'laravel-share-to-config');
+            $this->publishes([
+                __DIR__ . '/../config/laravel-share-to.php' => config_path('laravel-share-to.php'),
+            ], 'laravel-share-to-config');
+        }
     }
 }

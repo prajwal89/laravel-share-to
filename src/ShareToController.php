@@ -15,12 +15,13 @@ class ShareToController extends Controller
             return redirect('/');
         } else {
             $payloadData = json_decode(base64_decode($payload));
+            dd($payload);
             //track record
             DB::table('track_shares')->insert(
                 [
+                    'title' => $payloadData->title,
                     'url' => $payloadData->urlRedirectingFrom,
                     'chanel' => $payloadData->chanel,
-                    'title' => $payloadData->title,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
