@@ -20,5 +20,12 @@
         "email": "prajwalhallale89@gmail.com"
     }],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Prajwal89\\LaravelShareTo\\LaravelShareToServiceProvider"
+            ]
+        }
+    }
 }
