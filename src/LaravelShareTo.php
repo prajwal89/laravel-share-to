@@ -58,27 +58,6 @@ class LaravelShareTo
 
 
     /**
-     * The share urls
-     *
-     * @var array
-     */
-    protected $defaultOptions = [
-
-        'tracking' => false,
-
-        //options for container
-        'buttonGap' => 10, //in px
-        'alignment' => 'center', // accepts (start|center|end) alignment of of buttons in container
-
-        //options for button
-        'borderWidth' => 2,
-        'radius' => 4,
-        'paddingX' => 4,
-        'paddingY' => 8,
-    ];
-
-
-    /**
      * @param string|null $title
      * @param string|null $url 
      * @param array $options
@@ -87,7 +66,7 @@ class LaravelShareTo
 
     function __construct(public string $title, public string $url = '', protected $options = [])
     {
-        $this->options = array_replace($this->defaultOptions, $this->options);
+        $this->options = array_replace(config('laravel-share-to.options'), $this->options);
     }
 
     /**
