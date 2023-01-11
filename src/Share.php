@@ -8,6 +8,8 @@ class Share
 {
     public static function Page(string $title,  string $url = '',  $options = [])
     {
-        return new LaravelShareTo($title, $url, $options);
+        return new LaravelShareTo($title, $url, $options = []);
     }
 }
+
+

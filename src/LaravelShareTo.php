@@ -159,7 +159,7 @@ class LaravelShareTo
         return $this;
     }
 
-    public function getButtons($options = []): string
+    public function getButtons(): string
     {
         $this->html .= $this->getContainerPrefix();
 
