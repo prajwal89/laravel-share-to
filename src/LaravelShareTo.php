@@ -66,7 +66,7 @@ class LaravelShareTo
 
     function __construct(public string $title, public string $url = '', protected $options = [])
     {
-        $this->options = array_replace(config('laravel-share-to.options'), $this->options);
+        $this->options = array_replace(config('laravel-share-to.options') ?? [], $this->options);
     }
 
     /**
