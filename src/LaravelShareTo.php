@@ -75,6 +75,10 @@ class LaravelShareTo
      */
     function __construct(public string $title, public string $urlToShare = '', protected $options = [])
     {
+        if (empty($this->urlToShare)) {
+            $this->urlToShare = "//" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        }
+        
         $this->options = array_replace(config('laravel-share-to.options') ?? [], $this->options);
     }
 
