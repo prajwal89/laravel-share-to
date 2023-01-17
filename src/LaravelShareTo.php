@@ -60,6 +60,12 @@ class LaravelShareTo
         ],
     ];
 
+    /**
+     * Selected providers for processing
+     *
+     * @var array
+     */
+    protected $chosenProviders = [];
 
     /**
      * @param string|null $title
@@ -81,11 +87,10 @@ class LaravelShareTo
 
     public function all(): self
     {
-        $this->facebook();
-        $this->whatsapp();
-        $this->twitter();
-        $this->telegram();
-        $this->email();
+        array_map(function ($provider) {
+            $this->{$provider}();
+        }, array_keys($this->providerSettings));
+
         return $this;
     }
 
@@ -165,6 +170,7 @@ class LaravelShareTo
         $styles[] = 'padding:' . $this->options['paddingX'] . 'px ' . $this->options['paddingY'] . 'px';
         $styles[] = 'border:' . $this->options['borderWidth'] . 'px solid ' . $this->providerSettings[$provider]['primaryColor'];
         $styles[] = 'border-radius:' . $this->options['radius'] . 'px';
+
         return implode(';', $styles);
     }
 
@@ -183,24 +189,40 @@ class LaravelShareTo
         return '<div id="laravel-share-this" style="' . $this->getContainerInlineStyles() . '">';
     }
 
-
     public function getRawLinks(): array
     {
-        $this->all();
+        if (empty($this->chosenProviders)) {
+            $this->all();
+        } else {
+            array_map(function ($provider) {
+                $this->{$provider}();
+            }, $this->chosenProviders);
+        }
+
         return $this->shareUrls;
     }
 
-    public function only(array $providers)
+    /**
+     * Call only selected providers
+     *
+     * @param array $providers
+     * @return self
+     */
+
+    public function only(array $providers): self
     {
         foreach ($providers as $provider) {
             if (in_array($provider, array_keys($this->providerSettings))) {
-                $this->{$provider}();
+                $this->{$provider}(); //call method e.g $this->facebook()
+                $this->chosenProviders[] = $provider;
             }
         }
+
         return $this;
     }
 
-    public function generateShareUrl($chanel, $urlToRedirect)
+
+    public function generateShareUrl(string $chanel, string $urlToRedirect): string
     {
         $payload = [
             'title' => $this->title,
