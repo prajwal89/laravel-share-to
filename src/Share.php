@@ -6,10 +6,8 @@ use Prajwal89\LaravelShareTo\LaravelShareTo;
 
 class Share
 {
-    public static function Page(string $title,  string $url = '',  $options = [])
+    public static function Page(string $title,  string $urlToShare = '',  array $options = [])
     {
-        return new LaravelShareTo($title, $url, $options = []);
+        return new LaravelShareTo($title, $urlToShare, $options);
     }
 }
-
-
