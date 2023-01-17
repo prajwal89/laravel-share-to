@@ -1,6 +1,9 @@
 # Laravel Share To
 Generate and render social share buttons without any hassle
 
+**Live Preview**
+https://laravel-share-to.prajwalhallale.com
+
 ## Installation
 ```bash
 composer require prajwal89/laravel-share-to
