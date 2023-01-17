@@ -48,7 +48,37 @@ $options = [
     'paddingY' => 8,
 ];
 
-echo Share::Page('McqMate - MCQ Portal for Students', 'https://mcqmate.com', $options)->all()->getButtons();
+$share =  Share::Page('McqMate - MCQ Portal for Students', 'https://mcqmate.com', $options);
 
+echo $share->all()->getButtons();
 
 ```
+
+**Get all available buttons**
+```php
+echo $share->all()->getButtons();
+```
+
+**Get single button**
+```php
+echo $share->facebook()->getButtons();
+```
+
+**Get multiple buttons**
+```php
+echo $share->whatsapp()->twitter()->getButtons();
+//or
+echo $share->only(['whatsapp','twitter'])->getButtons();
+```
+
+**Get raw links**
+This will return array of share urls\
+you can use this to render buttons according to your need
+```php
+echo $share->all()->getRawLinks();
+//or
+echo $share->only(['whatsapp','twitter'])->getRawLinks();
+```
+
+## License
+laravel-share-to package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
