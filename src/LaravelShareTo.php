@@ -73,7 +73,6 @@ class LaravelShareTo
      * @param array $options
      * @return $this
      */
-
     function __construct(public string $title, public string $urlToShare = '', protected $options = [])
     {
         $this->options = array_replace(config('laravel-share-to.options') ?? [], $this->options);
@@ -84,7 +83,6 @@ class LaravelShareTo
      *
      * @return $this
      */
-
     public function all(): self
     {
         array_map(function ($provider) {
@@ -94,6 +92,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate facebook share url
+     *
+     * @return self
+     */
     public function facebook(): self
     {
         $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->urlToShare, 'quote' => urlencode($this->title)]);
@@ -105,6 +108,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate whatsapp share url
+     *
+     * @return self
+     */
     public function whatsapp(): self
     {
         $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->urlToShare]);
@@ -116,6 +124,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate twitter share url
+     *
+     * @return self
+     */
     public function twitter(): self
     {
         $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->urlToShare]);
@@ -127,6 +140,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate telegram share url
+     *
+     * @return self
+     */
     public function telegram(): self
     {
         $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->urlToShare]);
@@ -138,6 +156,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate email share url
+     *
+     * @return self
+     */
     public function email(): self
     {
         $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['subject' =>  $this->title, 'body' => $this->urlToShare], null, null, PHP_QUERY_RFC3986);
@@ -149,6 +172,11 @@ class LaravelShareTo
         return $this;
     }
 
+    /**
+     * Generate html for social buttons
+     *
+     * @return string
+     */
     public function getButtons(): string
     {
         $this->html .= $this->getContainerPrefix();
