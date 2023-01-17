@@ -53,7 +53,11 @@ class LaravelShareTo
         'telegram' => [
             'uri' => 'https://telegram.me/share/url',
             'primaryColor' => '#0088cc',
-        ]
+        ],
+        'email' => [
+            'uri' => 'mailto:',
+            'primaryColor' => '#808080',
+        ],
     ];
 
 
@@ -81,6 +85,7 @@ class LaravelShareTo
         $this->whatsapp();
         $this->twitter();
         $this->telegram();
+        $this->email();
         return $this;
     }
 
@@ -152,6 +157,26 @@ class LaravelShareTo
             $url = $this->generatePayloadUrl($payload);
         } else {
             $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+        }
+
+        $this->shareUrls[__FUNCTION__] = $url;
+
+        return $this;
+    }
+
+    public function email(): self
+    {
+        $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['subject' =>  $this->title, 'body' => $this->url], null, null, PHP_QUERY_RFC3986);
+        if ($this->options['tracking']) {
+            $payload = [
+                'title' => $this->title,
+                'chanel' => __FUNCTION__,
+                'urlToRedirect' => $urlToRedirect,
+                'urlRedirectingFrom' => $this->url,
+            ];
+            $url = $this->generatePayloadUrl($payload);
+        } else {
+            $url = $urlToRedirect;
         }
 
         $this->shareUrls[__FUNCTION__] = $url;
