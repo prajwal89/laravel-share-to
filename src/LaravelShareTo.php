@@ -91,16 +91,17 @@ class LaravelShareTo
 
     public function facebook(): self
     {
+        $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]);
         if ($this->options['tracking']) {
             $payload = [
                 'title' => $this->title,
                 'chanel' => __FUNCTION__,
-                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]),
-                'urlRedirectingFrom' => $this->url,
+                'urlToRedirect' => $urlToRedirect,
+                'urlToShare' => $this->url,
             ];
             $url = $this->generatePayloadUrl($payload);
         } else {
-            $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['u' => $this->url, 'quote' => urlencode($this->title)]);
+            $url = $urlToRedirect;
         }
 
         $this->shareUrls[__FUNCTION__] = $url;
@@ -109,16 +110,17 @@ class LaravelShareTo
 
     public function whatsapp(): self
     {
+        $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]);
         if ($this->options['tracking']) {
             $payload = [
                 'title' => $this->title,
                 'chanel' => __FUNCTION__,
-                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]),
-                'urlRedirectingFrom' => $this->url,
+                'urlToRedirect' => $urlToRedirect,
+                'urlToShare' => $this->url,
             ];
             $url = $this->generatePayloadUrl($payload);
         } else {
-            $url = $this->providerSettings[__FUNCTION__]['uri'] . "/?" . http_build_query(['text' =>  $this->title . "\n\n" . $this->url]);
+            $url = $urlToRedirect;
         }
 
         $this->shareUrls[__FUNCTION__] = $url;
@@ -128,16 +130,17 @@ class LaravelShareTo
 
     public function twitter(): self
     {
+        $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
         if ($this->options['tracking']) {
             $payload = [
                 'title' => $this->title,
                 'chanel' => __FUNCTION__,
-                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]),
-                'urlRedirectingFrom' => $this->url,
+                'urlToRedirect' => $urlToRedirect,
+                'urlToShare' => $this->url,
             ];
             $url = $this->generatePayloadUrl($payload);
         } else {
-            $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+            $url = $urlToRedirect;
         }
 
         $this->shareUrls[__FUNCTION__] = $url;
@@ -147,16 +150,17 @@ class LaravelShareTo
 
     public function telegram(): self
     {
+        $urlToRedirect = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
         if ($this->options['tracking']) {
             $payload = [
                 'title' => $this->title,
                 'chanel' => __FUNCTION__,
-                'urlToRedirect' => $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]),
-                'urlRedirectingFrom' => $this->url,
+                'urlToRedirect' => $urlToRedirect,
+                'urlToShare' => $this->url,
             ];
             $url = $this->generatePayloadUrl($payload);
         } else {
-            $url = $this->providerSettings[__FUNCTION__]['uri'] . "?" . http_build_query(['text' =>  $this->title . "\n", 'url' => $this->url]);
+            $url = $urlToRedirect;
         }
 
         $this->shareUrls[__FUNCTION__] = $url;
@@ -172,7 +176,7 @@ class LaravelShareTo
                 'title' => $this->title,
                 'chanel' => __FUNCTION__,
                 'urlToRedirect' => $urlToRedirect,
-                'urlRedirectingFrom' => $this->url,
+                'urlToShare' => $this->url,
             ];
             $url = $this->generatePayloadUrl($payload);
         } else {

@@ -19,7 +19,7 @@ class ShareToController extends Controller
             DB::table('track_shares')->insert(
                 [
                     'title' => $payloadData->title,
-                    'url' => $payloadData->urlRedirectingFrom,
+                    'url' => $payloadData->urlToShare,
                     'chanel' => $payloadData->chanel,
                     'created_at' => now(),
                     'updated_at' => now(),
